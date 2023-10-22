@@ -1,12 +1,11 @@
 import pytest
-
 from lms.domains import ModuleService
 from tests.factories import ModuleFactory
-
 
 @pytest.mark.usefixtures("wipe_modules_table")
 class TestModuleService:
     def test_create_module(self, teacher_user) -> None:
+        # Test creating a module using the ModuleService
         module = ModuleFactory.build()
 
         params = {
@@ -20,6 +19,7 @@ class TestModuleService:
         assert status == 201
 
     def test_create_module_with_missing_params(self, teacher_user) -> None:
+        # Test creating a module with missing parameters using the ModuleService
         module = ModuleFactory.build()
 
         params = {
@@ -28,10 +28,11 @@ class TestModuleService:
 
         message, status = ModuleService().create(current_user=teacher_user, params=params)
 
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
 
     def test_create_module_with_missing_description(self, teacher_user) -> None:
+        # Test creating a module with a missing description using the ModuleService
         module = ModuleFactory.build()
 
         params = {
@@ -40,10 +41,11 @@ class TestModuleService:
 
         message, status = ModuleService().create(current_user=teacher_user, params=params)
 
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
 
     def test_create_module_without_teacher(self) -> None:
+        # Test creating a module without a teacher using the ModuleService
         module = ModuleFactory.build()
 
         params = {
@@ -53,5 +55,5 @@ class TestModuleService:
 
         message, status = ModuleService().create(current_user=None, params=params)
 
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
