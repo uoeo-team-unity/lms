@@ -15,7 +15,7 @@ class AssignmentService:
         # Check if all required parameters are present.
         if not all([title, description, module_id, due_date]):
             # Return an error message and a 422 Unprocessable Entity status code if any parameter is missing.
-            return "Something doesn't look right, please double check the parameters and try again", 422
+            return "Something doesn't look right, please double-check the parameters and try again", 422
 
         # Use the Assignment model's create class method to save the new assignment to the database.
         Assignment.create(title=title, description=description, module_id=module_id, due_date=due_date)

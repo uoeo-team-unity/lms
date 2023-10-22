@@ -7,6 +7,7 @@ from tests.factories import UserFactory
 @pytest.mark.usefixtures("wipe_users_table")
 class TestUserModel:
     def test_user_init(self) -> None:
+        # Test initialising a User model
         user = UserFactory.build()
         assert isinstance(user, User)
         assert isinstance(user.first_name, str)
@@ -15,6 +16,7 @@ class TestUserModel:
         assert isinstance(user.role_id, int)
 
     def test_user_init_with_missing_value(self) -> None:
+        # Test initialising a User model with missing values
         with pytest.raises(TypeError) as error:
             User()
 
@@ -24,6 +26,7 @@ class TestUserModel:
         )
 
     def test_user_create(self) -> None:
+        # Test creating a User model
         user = UserFactory.build()
         created_user = User.create(
             username=user.username,
@@ -41,12 +44,14 @@ class TestUserModel:
         assert created_user.email == user.email
 
     def test_user_update(self) -> None:
+        # Test updating a User model
         user = UserFactory.create()
         updated_user = user.update({"first_name": "updated name"})
         assert isinstance(updated_user, User)
         assert updated_user.first_name == "updated name"
 
     def test_user_update_if_email_already_exists_rollback(self) -> None:
+        # Test updating a User model with an existing email (should trigger a rollback)
         user = UserFactory.create()
         another_user = UserFactory.create()
 

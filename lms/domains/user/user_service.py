@@ -29,18 +29,18 @@ class UserService:
 
         # Ensure all required parameters are present.
         if not all([username, password, role, first_name, last_name, email]):
-            return "Something doesn't look right, please double check the parameters and try again", 422
+            return "Something doesn't look right, please double-check the parameters and try again", 422
 
         # Check if a user with the given email already exists.
         user = User.find_by(email=email)
         if user:
-            return f"User with email {email} already exists, please double check the parameters and try again", 422
+            return f"User with email {email} already exists, please double-check the parameters and try again", 422
 
         # Convert role string to its corresponding enum value.
         try:
             role_id = UserRole[role.upper()].value
         except KeyError:
-            return "You've specified an invalid role, please double check the parameters and try again", 422
+            return "You've specified an invalid role, please double-check the parameters and try again", 422
 
         # Hash the user's password.
         hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
@@ -81,7 +81,7 @@ class UserService:
                 params["role_id"] = role_id
                 del params["role"]
             except KeyError:
-                return "You've specified an invalid role, please double check the parameters and try again", 422
+                return "You've specified an invalid role, please double-check the parameters and try again", 422
 
         # Attempt to update the user's information.
         try:
@@ -110,4 +110,4 @@ class UserService:
                 return "Successfully logged-in", 200
 
         # Return an error if login fails.
-        return "An error occurred while trying to log-in, please double check your credentials and try again.", 422
+        return "An error occurred while trying to log-in, please double-check your credentials and try again.", 422

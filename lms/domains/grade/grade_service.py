@@ -14,7 +14,7 @@ class GradeService:
         # Check if all required parameters are present
         if not all([student_id, assignment_id, score]):
             # Return an error message and a 422 status code if any parameter is missing
-            return "Something doesn't look right, please double check the parameters and try again", 422
+            return "Something doesn't look right, please double-check the parameters and try again", 422
 
         # Create a new grade entry in the database
         Grade.create(student_id=student_id, assignment_id=assignment_id, score=score)

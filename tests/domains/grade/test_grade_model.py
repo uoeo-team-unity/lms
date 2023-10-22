@@ -7,6 +7,7 @@ from tests.factories import AssignmentFactory, GradeFactory, UserFactory
 @pytest.mark.usefixtures("wipe_grades_table")
 class TestGradeModel:
     def test_grade_init(self) -> None:
+        # Test the initialisation of a Grade object
         grade = GradeFactory.build()
         assert isinstance(grade, Grade)
         assert isinstance(grade.score, (int, type(None)))
@@ -14,6 +15,7 @@ class TestGradeModel:
         assert isinstance(grade.assignment_id, (int, type(None)))
 
     def test_grade_init_with_missing_value(self) -> None:
+        # Test the initialisation of a Grade object with missing values
         with pytest.raises(TypeError) as error:
             Grade()
 
@@ -22,6 +24,7 @@ class TestGradeModel:
         )
 
     def test_grade_create(self) -> None:
+        # Test creating a Grade object
         student = UserFactory.create()
         assignment = AssignmentFactory.create()
         grade = GradeFactory.build(student_id=student.id, assignment_id=assignment.id)

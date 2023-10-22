@@ -9,6 +9,7 @@ from tests.factories import AssignmentFactory, ModuleFactory
 @pytest.mark.usefixtures("wipe_assignments_table")
 class TestAssignmentModel:
     def test_assignment_init(self) -> None:
+        # Test initialising an assignment instance
         assignment = AssignmentFactory.build()
         assert isinstance(assignment, Assignment)
         assert isinstance(assignment.title, str)
@@ -17,14 +18,15 @@ class TestAssignmentModel:
         assert isinstance(assignment.due_date, (date, type(None)))
 
     def test_assignment_init_with_missing_value(self) -> None:
+        # Test initialising an assignment instance with missing values
         with pytest.raises(TypeError) as error:
             Assignment()
-
         assert str(error.value) == (
             "__init__() missing 4 required positional arguments: 'title', 'description', 'module_id', and 'due_date'"
         )
 
     def test_assignment_create(self) -> None:
+        # Test creating an assignment instance
         module = ModuleFactory.create()
         assignment = AssignmentFactory.build(module_id=module.id)
         created_assignment = Assignment.create(
