@@ -9,7 +9,7 @@ class TestGradeModel:
     def test_grade_init(self) -> None:
         grade = GradeFactory.build()
         assert isinstance(grade, Grade)
-        assert isinstance(grade.score, float)
+        assert isinstance(grade.score, (int, type(None)))
         assert isinstance(grade.student_id, (int, type(None)))
         assert isinstance(grade.assignment_id, (int, type(None)))
 
