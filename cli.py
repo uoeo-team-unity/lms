@@ -1,3 +1,6 @@
+"""
+Team Unity - LMS application
+"""
 import click
 import requests
 
