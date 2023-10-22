@@ -22,8 +22,9 @@ def cli(ctx) -> None:
         click.echo("5. Create an Assignment")
         click.echo("6. Submit a Grade")
         click.echo("7. View Grades as a Student")
-        click.echo("8. Logout")
-        click.echo("9. Exit")
+        click.echo("8. Toggle Hacker Mode")
+        click.echo("9. Logout")
+        click.echo("10. Exit")
 
         choice = click.prompt("Please select an action", type=int)
 
@@ -42,8 +43,10 @@ def cli(ctx) -> None:
         elif choice == 7:
             view_grades()
         elif choice == 8:
-            logout()
+            toggle_hacker_mode()
         elif choice == 9:
+            logout()
+        elif choice == 10:
             click.echo("Exiting...")
             break
         else:
@@ -222,6 +225,22 @@ def view_grades() -> None:
         click.echo("Your grades:")
         for grade in data:
             click.echo(f'- Assignment ID: {grade.get("assignment_id")}, Score: {grade.get("score")}')
+    click.echo("")
+
+
+def toggle_hacker_mode() -> None:
+    """Toggle the Hacker Mode feature switch."""
+    click.echo("Toggle Hacker Mode")
+    status = click.prompt("Enter 1 to turn ON or 0 to turn OFF", type=int)
+
+    if status not in {0, 1}:
+        click.echo("Invalid input. Please enter 1 or 0.")
+        return
+
+    response = requests.post(f"{API_BASE_URL}/feature_switch/hacker_mode", json={"active": status})
+    data = response.json()
+    message = data.get("message")
+    click.echo(message)
     click.echo("")
 
 

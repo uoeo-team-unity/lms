@@ -1,5 +1,5 @@
 from .assignment import Assignment, AssignmentService, assignment_domain
-from .feature_switch import FeatureSwitch
+from .feature_switch import FeatureSwitch, feature_switch_domain
 from .grade import Grade, GradeService, grade_domain
 from .module import Module, ModuleService, module_domain
 from .user import User, UserRole, UserService, user_domain
@@ -9,6 +9,7 @@ __all__ = [
     "Assignment",
     "AssignmentService",
     "FeatureSwitch",
+    "feature_switch_domain",
     "Grade",
     "GradeService",
     "grade_domain",
