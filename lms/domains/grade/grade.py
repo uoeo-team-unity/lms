@@ -3,7 +3,6 @@ import os
 from typing import Final
 
 from flask import Blueprint, Response, jsonify, request
-from werkzeug.exceptions import BadRequest
 
 from lms.decorators import authorise_teacher, authorise_user
 
@@ -18,14 +17,7 @@ grade_domain = Blueprint("grade_domain", __name__, url_prefix="/grades")
 @authorise_teacher
 def create_grade(current_user) -> tuple[Response, int]:
     """Create a new grade"""
-
-    data = {}
-
-    try:
-        data = request.json
-    except BadRequest:
-        pass
-
+    data = request.get_json()
     message, status = GradeService().create(params=data)
 
     return jsonify({"message": message}), status

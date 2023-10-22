@@ -10,6 +10,7 @@ from sqlalchemy import text
 from lms.adapters import db as _db
 from lms.app import app as _app
 from lms.common import HERE
+from lms.domains import FeatureSwitch
 from tests.factories import StudentFactory, TeacherFactory, UserFactory
 
 AUTH_TOKEN_PATH = f"{HERE}/../.auth"
@@ -44,6 +45,8 @@ def db(app, request, monkeypatch) -> Generator:
 
 @pytest.fixture
 def wipe_users_table(db) -> Generator:
+    db.session.execute(text("TRUNCATE users CASCADE;"))
+    db.session.commit()
     yield
     db.session.execute(text("TRUNCATE users CASCADE;"))
     db.session.commit()
@@ -99,6 +102,34 @@ def student_user(db) -> Generator:
     update_token(student_user.auth_token)
 
     yield student_user
+
+
+@pytest.fixture
+def teacher_user_without_token(wipe_users_table) -> Generator:
+    teacher_user = TeacherFactory.create(username="teacher")
+    yield teacher_user
+
+
+@pytest.fixture
+def toggle_hacker_mode(db) -> Generator:
+    # Ensure the table is clean before the test
+    db.session.execute(text("TRUNCATE feature_switches;"))
+    db.session.commit()
+
+    # Create and activate the "hacker_mode" feature switch
+    hacker_mode = FeatureSwitch.create(name="hacker_mode", active=1)
+    db.session.commit()
+
+    # Yield control to the test
+    yield
+
+    # Deactivate the "hacker_mode" feature switch after the test
+    hacker_mode.set_value(0)
+    db.session.commit()
+
+    # Clean up the table after the test
+    db.session.execute(text("TRUNCATE feature_switches;"))
+    db.session.commit()
 
 
 def update_token(token) -> None:

@@ -3,11 +3,10 @@ import os
 from typing import Final, Literal
 
 from flask import Blueprint, Response, jsonify, request
-from werkzeug.exceptions import BadRequest
 
 from lms.common import authorise_admin, authorise_admin_or_teacher
 
-from .user_model import User
+from .user_model import User, UserRole
 from .user_service import UserService
 
 HERE: Final[str] = os.path.dirname(os.path.realpath(__file__))
@@ -19,14 +18,7 @@ user_domain = Blueprint("user_domain", __name__, url_prefix="/users")
 @authorise_admin
 def create_user() -> tuple[Response, Literal[422] | Literal[201]]:
     """Create a new user."""
-
-    user_data = {}
-
-    try:
-        user_data = request.json
-    except BadRequest:
-        pass
-
+    user_data = request.get_json()
     message, status = UserService().create(params=user_data)
 
     return jsonify({"message": message}), status
@@ -77,13 +69,7 @@ def get_user(user_id) -> tuple[Response, Literal[200]] | tuple[Response, Literal
 @authorise_admin
 def update_user(user_id) -> tuple[Response, Literal[422, 200]]:
     """Update user details."""
-    user_data = {}
-
-    try:
-        user_data = request.json
-    except BadRequest:
-        pass
-
+    user_data = request.get_json()
     message, status = UserService().update(user_id=user_id, params=user_data)
     return jsonify({"message": message}), status
 
@@ -93,7 +79,7 @@ def update_user(user_id) -> tuple[Response, Literal[422, 200]]:
 def list_all_students() -> tuple[Response, Literal[200]]:
     """List all the current students"""
 
-    students = User.query.where(User.role_id == 3).all()
+    students = User.query.where(User.role_id == UserRole.STUDENT.value).all()
 
     students = [
         {

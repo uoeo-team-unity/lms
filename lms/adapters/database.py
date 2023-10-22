@@ -15,7 +15,7 @@ class BaseMixin(object):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     @classmethod
-    def get(cls, id):
+    def get(cls, id) -> Any:
         return cls.query.get(id)
 
     @classmethod
@@ -24,5 +24,5 @@ class BaseMixin(object):
         return db.session.execute(db.select(cls).where(*filters)).scalars().first()
 
     @classmethod
-    def _filters(cls, kwargs):
+    def _filters(cls, kwargs) -> list[Any]:
         return [getattr(cls, attr) == kwargs[attr] for attr in kwargs]

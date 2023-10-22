@@ -18,6 +18,17 @@ class TestModule:
         assert response.status_code == 201
         assert data.get("message") == f"Module with title {module.title} successfully created"
 
+    def test_create_module_with_hacker_mode(self, client, teacher_user_without_token, toggle_hacker_mode) -> None:
+        module = ModuleFactory.build()
+
+        params = {"title": module.title, "description": module.description, "teacher_id": module.teacher_id}
+
+        response = client.post("/modules/create", json=params)
+        data = json.loads(response.data)
+
+        assert response.status_code == 201
+        assert data.get("message") == f"Module with title {module.title} successfully created"
+
     def test_create_module_with_missing_argument(self, client, teacher_user) -> None:
         module = ModuleFactory.build()
 
@@ -50,6 +61,8 @@ class TestModule:
         response = client.get("/modules/list")
         data = json.loads(response.data)
 
+        assert response.status_code == 200
+
         assert isinstance(data, list)
         assert len(data) >= 1
         assert "id" in data[0]
@@ -70,3 +83,17 @@ class TestModule:
                 "Please double-check your authorization and try again."
             )
         }
+
+    def test_list_all_modules_with_hacker_mode(self, client, teacher_user_without_token, toggle_hacker_mode) -> None:
+        ModuleFactory.create()
+        ModuleFactory.create()
+
+        response = client.get("/modules/list")
+        data = json.loads(response.data)
+
+        assert response.status_code == 200
+
+        assert isinstance(data, list)
+        assert len(data) >= 1
+        assert "id" in data[0]
+        assert "title" in data[0]

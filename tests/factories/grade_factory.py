@@ -12,7 +12,7 @@ class GradeFactory(BaseFactory):
         model = Grade
         exclude = ["student", "assignment"]
 
-    score = factory.Faker("pyfloat", positive=True, max_value=100)
+    score = factory.Faker("pyint", min_value=0, max_value=100)
     student = factory.SubFactory(StudentFactory)
     student_id = factory.SelfAttribute("student.id")
     assignment = factory.SubFactory(AssignmentFactory)

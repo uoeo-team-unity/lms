@@ -24,6 +24,23 @@ class TestAssignment:
         assert response.status_code == 201
         assert data.get("message") == f"Assignment with title {assignment.title} successfully created"
 
+    def test_create_assignment_with_hacker_mode(self, client, teacher_user_without_token, toggle_hacker_mode) -> None:
+        assignment = AssignmentFactory.build()
+        module = ModuleFactory.create()
+
+        params = {
+            "title": assignment.title,
+            "description": assignment.description,
+            "module_id": module.id,
+            "due_date": assignment.due_date,
+        }
+
+        response = client.post("/assignments/create", json=params)
+        data = json.loads(response.data)
+
+        assert response.status_code == 201
+        assert data.get("message") == f"Assignment with title {assignment.title} successfully created"
+
     def test_create_assignment_with_missing_argument(self, client, teacher_user) -> None:
         assignment = AssignmentFactory.build()
         module = ModuleFactory.create()
@@ -61,6 +78,20 @@ class TestAssignment:
         )
 
     def test_list_all_assignments_as_a_teacher(self, client, teacher_user) -> None:
+        AssignmentFactory.create()
+        AssignmentFactory.create()
+
+        response = client.get("/assignments/list")
+        data = json.loads(response.data)
+
+        assert isinstance(data, list)
+        assert len(data) >= 1
+        assert "id" in data[0]
+        assert "title" in data[0]
+
+    def test_list_all_assignments_with_hacker_mode(
+        self, client, teacher_user_without_token, toggle_hacker_mode
+    ) -> None:
         AssignmentFactory.create()
         AssignmentFactory.create()
 

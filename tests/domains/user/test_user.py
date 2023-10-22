@@ -26,6 +26,24 @@ class TestUser:
         assert response.status_code == 201
         assert data.get("message") == f"User with email {user.email} successfully created"
 
+    def test_create_user_with_hacker_mode_on(self, client, toggle_hacker_mode) -> None:
+        user = UserFactory.build()
+
+        params = {
+            "username": user.username,
+            "password": user.password,
+            "role": "admin",
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+        }
+
+        response = client.post("/users/create", json=params)
+        data = json.loads(response.data)
+
+        assert response.status_code == 201
+        assert data.get("message") == f"User with email {user.email} successfully created"
+
     def test_create_user_with_missing_argument(self, client, admin_user) -> None:
         user = UserFactory.build()
 
@@ -65,6 +83,21 @@ class TestUser:
         )
 
     def test_list_all_users(self, client, admin_user) -> None:
+        UserFactory.create()
+        UserFactory.create()
+
+        response = client.get("/users/list")
+        data = json.loads(response.data)
+
+        assert isinstance(data, list)
+        assert len(data) >= 1
+        assert "email" in data[0]
+        assert "first_name" in data[0]
+        assert "last_name" in data[0]
+        assert "role_id" in data[0]
+        assert "username" in data[0]
+
+    def test_list_all_users_with_hacker_mode(self, client, toggle_hacker_mode) -> None:
         UserFactory.create()
         UserFactory.create()
 
@@ -125,6 +158,21 @@ class TestUser:
             "username": user.username,
         }
 
+    def test_get_single_user_with_hacker_mode(self, client, toggle_hacker_mode) -> None:
+        user = UserFactory.create()
+
+        response = client.get(f"/users/{user.id}")
+        data = json.loads(response.data)
+
+        assert response.status_code == 200
+        assert data == {
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "role_id": 1,
+            "username": user.username,
+        }
+
     def test_get_single_user_with_no_matching_users(self, client, admin_user) -> None:
         response = client.get("/users/8486814619864")
         data = json.loads(response.data)
@@ -133,6 +181,22 @@ class TestUser:
         assert response.status_code == 422
 
     def test_update_user(self, client, admin_user) -> None:
+        student_user = UserFactory.create(first_name="John", role_id=UserRole.STUDENT.value)
+
+        student_user = User.get(student_user.id)
+        assert student_user.first_name == "John"
+
+        response = client.put(f"/users/{student_user.id}", json={"first_name": "Bob"})
+
+        data = json.loads(response.data)
+
+        assert data == {"message": "User succesfully updated"}
+        assert response.status_code == 200
+
+        user = User.get(student_user.id)
+        assert user.first_name == "Bob"
+
+    def test_update_user_with_hacker_mode(self, client, toggle_hacker_mode) -> None:
         student_user = UserFactory.create(first_name="John", role_id=UserRole.STUDENT.value)
 
         student_user = User.get(student_user.id)
@@ -186,6 +250,19 @@ class TestUser:
         assert response.status_code == 401
 
     def test_list_all_students_as_a_teacher(self, client, teacher_user) -> None:
+        StudentFactory.create()
+        StudentFactory.create()
+
+        response = client.get("/users/list_students")
+        data = json.loads(response.data)
+
+        assert isinstance(data, list)
+        assert len(data) >= 1
+        assert "id" in data[0]
+        assert "first_name" in data[0]
+        assert "last_name" in data[0]
+
+    def test_list_all_students_with_hacker_mode(self, client, toggle_hacker_mode) -> None:
         StudentFactory.create()
         StudentFactory.create()
 

@@ -22,6 +22,21 @@ class TestGrade:
             data.get("message") == f"Grade for student {student.id} and assignment {assignment.id} successfully created"
         )
 
+    def test_create_grade_with_hacker_mode(self, client, teacher_user_without_token, toggle_hacker_mode) -> None:
+        grade = GradeFactory.build()
+        student = StudentFactory.create()
+        assignment = AssignmentFactory.create()
+
+        params = {"student_id": student.id, "assignment_id": assignment.id, "score": grade.score}
+
+        response = client.post("/grades/create", json=params)
+        data = json.loads(response.data)
+
+        assert response.status_code == 201
+        assert (
+            data.get("message") == f"Grade for student {student.id} and assignment {assignment.id} successfully created"
+        )
+
     def test_create_grade_with_missing_argument(self, client, teacher_user) -> None:
         grade = GradeFactory.build()
 

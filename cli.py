@@ -224,7 +224,7 @@ def view_grades() -> None:
         click.echo("")
         click.echo("Your grades:")
         for grade in data:
-            click.echo(f'- Assignment ID: {grade.get("assignment_id")}, Score: {grade.get("score")}')
+            click.echo(f'- Assignment ID: {grade.get("assignment_id")}, Score: {int(grade.get("score"))}/100')
     click.echo("")
 
 
