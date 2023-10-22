@@ -59,7 +59,7 @@ class TestUser:
         data = json.loads(response.data)
 
         assert response.status_code == 422
-        assert data.get("message") == "Something does't look right, lease double check the parameters and try again"
+        assert data.get("message") == "Something doesn't look right, please double check the parameters and try again"
 
     def test_create_user_with_existing_email_address(self, client, admin_user) -> None:
         user = UserFactory.create()
@@ -139,7 +139,7 @@ class TestUser:
         assert data == {
             "message": (
                 "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             )
         }
 
@@ -190,7 +190,7 @@ class TestUser:
 
         data = json.loads(response.data)
 
-        assert data == {"message": "User succesfully updated"}
+        assert data == {"message": "User successfully updated"}
         assert response.status_code == 200
 
         user = User.get(student_user.id)
@@ -206,7 +206,7 @@ class TestUser:
 
         data = json.loads(response.data)
 
-        assert data == {"message": "User succesfully updated"}
+        assert data == {"message": "User successfully updated"}
         assert response.status_code == 200
 
         user = User.get(student_user.id)
@@ -244,7 +244,7 @@ class TestUser:
         assert data == {
             "message": (
                 "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             )
         }
         assert response.status_code == 401
@@ -287,6 +287,6 @@ class TestUser:
         assert data == {
             "message": (
                 "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             )
         }

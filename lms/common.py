@@ -40,14 +40,14 @@ def authorise_admin(function) -> Any:
         if not current_user:
             return {
                 "message": "It appears you provided an invalid token. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             }, 401
 
         # If the user is not an admin, return an error message and a 401 status code
         if not current_user.is_admin():
             return {
                 "message": "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             }, 401
 
         # If all checks pass, proceed with the original function
@@ -86,14 +86,14 @@ def authorise_admin_or_teacher(function) -> Any:
         if not current_user:
             return {
                 "message": "It appears you provided an invalid token. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             }, 401
 
         # If the user is a student, return an error message and a 401 status code
         if current_user.is_student():
             return {
                 "message": "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             }, 401
 
         # If all checks pass, proceed with the original function

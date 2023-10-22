@@ -51,7 +51,7 @@ class TestModule:
         assert response.status_code == 401
         assert data.get("message") == (
             "It appears you are not authorised to perform this action. "
-            "Please double-check your authorization and try again."
+            "Please double-check your authorisation and try again."
         )
 
     def test_list_all_modules_as_a_teacher(self, client, teacher_user) -> None:
@@ -80,7 +80,7 @@ class TestModule:
         assert data == {
             "message": (
                 "It appears you are not authorised to perform this action. "
-                "Please double-check your authorization and try again."
+                "Please double-check your authorisation and try again."
             )
         }
 

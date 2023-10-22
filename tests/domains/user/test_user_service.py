@@ -36,7 +36,7 @@ class TestUserService:
 
         message, status = UserService().create(params=params)
 
-        assert message == "Something does't look right, lease double check the parameters and try again"
+        assert message == "Something doesn't look right, please double check the parameters and try again"
         assert status == 422
 
     def test_create_user_with_same_email_address(self) -> None:
@@ -82,7 +82,7 @@ class TestUserService:
 
         message, status = UserService().login(username=user.username, password="test")
 
-        assert message == "Succesfully logged-in"
+        assert message == "Successfully logged-in"
         assert status == 200
 
     def test_user_login_with_invalid_username(self) -> None:
@@ -92,7 +92,9 @@ class TestUserService:
 
         message, status = UserService().login(username="Invalid Username", password="test")
 
-        assert message == "An error occured while trying to log-in, please double check your credentials and try again."
+        assert (
+            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        )
         assert status == 422
 
     def test_user_login_with_invalid_password(self) -> None:
@@ -102,5 +104,7 @@ class TestUserService:
 
         message, status = UserService().login(username=user.username, password="invalid")
 
-        assert message == "An error occured while trying to log-in, please double check your credentials and try again."
+        assert (
+            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        )
         assert status == 422
