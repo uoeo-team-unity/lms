@@ -4,7 +4,6 @@ import os
 from typing import Final, Literal
 
 from flask import Response, jsonify, request
-from werkzeug.exceptions import BadRequest
 
 # Importing domain-specific modules to be used as blueprints in the Flask application
 from lms.domains import UserService, assignment_domain, feature_switch_domain, grade_domain, module_domain, user_domain

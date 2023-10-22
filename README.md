@@ -46,6 +46,11 @@ Run the tests:
 docker exec -it lms python3 -m pytest -v
 ```
 
+You can also run the tests coverage if you want:
+```bash
+docker exec -it lms python3 -m pytest --cov=lms tests/
+```
+
 Launch the CLI App:
 By default, we create a admin user for ease of use, (username: admin, password: admin)
 ```bash
