@@ -61,7 +61,7 @@ class TestGrade:
         assert response.status_code == 401
         assert data.get("message") == (
             "It appears you are not authorised to perform this action. "
-            "Please double-check your authorization and try again."
+            "Please double-check your authorisation and try again."
         )
 
     def test_view_grades_as_student(self, client, student_user) -> None:
@@ -81,5 +81,5 @@ class TestGrade:
         response = client.get("/grades/view")
         data = json.loads(response.data)
 
-        assert data.get("message") == "You are not a student, so there is no grades to see"
+        assert data.get("message") == "You are not a student, so there are no grades to view"
         assert response.status_code == 422

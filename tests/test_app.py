@@ -34,7 +34,7 @@ class TestApp:
         data = json.loads(response.data)
 
         assert response.status_code == 200
-        assert data == {"message": "Succesfully logged-in"}
+        assert data == {"message": "Successfully logged-in"}
 
     def test_login_with_invalid_password(self, client) -> None:
         username = "john"
@@ -55,7 +55,7 @@ class TestApp:
 
         assert response.status_code == 422
         assert data == {
-            "message": "An error occured while trying to log-in, please double check your credentials and try again."
+            "message": "An error occurred while trying to log-in, please double check your credentials and try again."
         }
 
     def test_login_with_invalid_user(self, client) -> None:
@@ -67,7 +67,7 @@ class TestApp:
 
         assert response.status_code == 422
         assert data == {
-            "message": "An error occured while trying to log-in, please double check your credentials and try again."
+            "message": "An error occurred while trying to log-in, please double check your credentials and try again."
         }
 
     def test_logout(self, client, admin_user) -> None:
