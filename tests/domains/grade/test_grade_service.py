@@ -27,5 +27,5 @@ class TestGradeService:
 
         message, status = GradeService().create(params=params)
 
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422

@@ -67,7 +67,7 @@ class TestApp:
         # Assert that the response status code is 422 and indicates a login error.
         assert response.status_code == 422
         assert data == {
-            "message": "An error occurred while trying to log-in, please double check your credentials and try again."
+            "message": "An error occurred while trying to log-in, please double-check your credentials and try again."
         }
 
     # Test logging in with invalid user credentials.
@@ -82,7 +82,7 @@ class TestApp:
         # Assert that the response status code is 422 and indicates a login error.
         assert response.status_code == 422
         assert data == {
-            "message": "An error occurred while trying to log-in, please double check your credentials and try again."
+            "message": "An error occurred while trying to log-in, please double-check your credentials and try again."
         }
 
     # Test the logout functionality.

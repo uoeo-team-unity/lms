@@ -34,7 +34,7 @@ class TestUserService:
         }
         message, status = UserService().create(params=params)
 
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
 
     def test_create_user_with_same_email_address(self) -> None:
@@ -51,7 +51,7 @@ class TestUserService:
         message, status = UserService().create(params=params)
 
         assert message == (
-            f"User with email {user.email} already exists, " "please double check the parameters and try again"
+            f"User with email {user.email} already exists, " "please double-check the parameters and try again"
         )
         assert status == 422
 
@@ -68,7 +68,7 @@ class TestUserService:
         }
         message, status = UserService().create(params=params)
 
-        assert message == "You've specified an invalid role, please double check the parameters and try again"
+        assert message == "You've specified an invalid role, please double-check the parameters and try again"
         assert status == 422
 
     def test_user_login(self) -> None:
@@ -87,7 +87,7 @@ class TestUserService:
         message, status = UserService().login(username="Invalid Username", password="test")
 
         assert (
-            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+            message == "An error occurred while trying to log-in, please double-check your credentials and try again."
         )
         assert status == 422
 
@@ -98,6 +98,6 @@ class TestUserService:
         message, status = UserService().login(username=user.username, password="invalid")
 
         assert (
-            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+            message == "An error occurred while trying to log-in, please double-check your credentials and try again."
         )
         assert status == 422

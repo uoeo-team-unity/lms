@@ -29,7 +29,7 @@ class ModuleService:
         # Validate that all required parameters are present
         if not all([title, description, teacher_id]):
             # If any are missing, return an error message and a 422 Unprocessable Entity status
-            return "Something doesn't look right, please double check the parameters and try again", 422
+            return "Something doesn't look right, please double-check the parameters and try again", 422
 
         # Create a new module with the provided attributes
         Module.create(title=title, description=description, teacher_id=teacher_id)

@@ -29,7 +29,7 @@ class TestAssignmentService:
             "module_id": module.id,
         }
         message, status = AssignmentService().create(current_user=teacher_user, params=params)
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
 
     def test_create_assignment_without_module(self, teacher_user) -> None:
@@ -37,7 +37,7 @@ class TestAssignmentService:
         assignment = AssignmentFactory.build()
         params = {"title": assignment.title, "description": assignment.description}
         message, status = AssignmentService().create(current_user=teacher_user, params=params)
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422
 
     def test_create_assignment_without_due_date(self, teacher_user) -> None:
@@ -50,5 +50,5 @@ class TestAssignmentService:
             "module_id": module.id,
         }
         message, status = AssignmentService().create(current_user=teacher_user, params=params)
-        assert message == "Something doesn't look right, please double check the parameters and try again"
+        assert message == "Something doesn't look right, please double-check the parameters and try again"
         assert status == 422

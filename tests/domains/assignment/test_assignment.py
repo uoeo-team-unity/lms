@@ -49,7 +49,7 @@ class TestAssignment:
         response = client.post("/assignments/create", json=params)
         data = json.loads(response.data)
         assert response.status_code == 422
-        assert data.get("message") == "Something doesn't look right, please double check the parameters and try again"
+        assert data.get("message") == "Something doesn't look right, please double-check the parameters and try again"
 
     def test_create_assignment_as_a_student(self, client, student_user) -> None:
         # Test creating an assignment as a student
