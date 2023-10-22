@@ -1,6 +1,9 @@
 import json
+
 import pytest
+
 from tests.factories import ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_modules_table")
 class TestModule:

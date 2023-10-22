@@ -6,6 +6,7 @@ from .assignment_factory import AssignmentFactory
 from .base import BaseFactory
 from .user_factory import StudentFactory
 
+
 # Create a factory for generating Grade instances.
 class GradeFactory(BaseFactory):
     class Meta:

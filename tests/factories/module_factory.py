@@ -5,6 +5,7 @@ from lms.domains import Module
 from .base import BaseFactory
 from .user_factory import TeacherFactory
 
+
 # Create a factory for generating Module instances.
 class ModuleFactory(BaseFactory):
     class Meta:

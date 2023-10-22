@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import Grade
 from tests.factories import AssignmentFactory, GradeFactory, UserFactory
+
 
 @pytest.mark.usefixtures("wipe_grades_table")
 class TestGradeModel:

@@ -4,6 +4,7 @@ from lms.domains import User, UserRole
 
 from .base import BaseFactory
 
+
 # Create a factory for generating User instances.
 class UserFactory(BaseFactory):
     class Meta:
@@ -30,6 +31,7 @@ class UserFactory(BaseFactory):
     # Generate a random authentication token using the Faker library.
     auth_token = factory.Faker("password")
 
+
 # Create a factory for generating Teacher instances.
 class TeacherFactory(BaseFactory):
     class Meta:
@@ -55,6 +57,7 @@ class TeacherFactory(BaseFactory):
 
     # Generate a random authentication token using the Faker library.
     auth_token = factory.Faker("password")
+
 
 # Create a factory for generating Student instances.
 class StudentFactory(BaseFactory):

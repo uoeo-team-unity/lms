@@ -1,6 +1,9 @@
 import json
+
 import pytest
+
 from tests.factories import AssignmentFactory, GradeFactory, StudentFactory
+
 
 @pytest.mark.usefixtures("wipe_grades_table")
 class TestGrade:

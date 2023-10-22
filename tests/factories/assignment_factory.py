@@ -4,8 +4,10 @@ from lms.domains import Assignment
 
 # Import the base factory class.
 from .base import BaseFactory
+
 # Import the ModuleFactory for creating associated modules.
 from .module_factory import ModuleFactory
+
 
 # Define the AssignmentFactory class that inherits from the BaseFactory.
 class AssignmentFactory(BaseFactory):

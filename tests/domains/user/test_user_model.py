@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import User
 from tests.factories import UserFactory
+
 
 @pytest.mark.usefixtures("wipe_users_table")
 class TestUserModel:

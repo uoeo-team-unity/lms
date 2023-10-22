@@ -1,6 +1,9 @@
 import json
+
 import pytest
+
 from tests.factories import AssignmentFactory, ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_assignments_table")
 class TestAssignment:

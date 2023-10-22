@@ -1,7 +1,10 @@
 from datetime import date
+
 import pytest
+
 from lms.domains import Assignment
 from tests.factories import AssignmentFactory, ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_assignments_table")
 class TestAssignmentModel:

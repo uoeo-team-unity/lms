@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import AssignmentService
 from tests.factories import AssignmentFactory, ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_assignments_table")
 class TestAssignmentService:

@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import Module
 from tests.factories import ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_modules_table")
 class TestModuleModel:
@@ -10,7 +12,7 @@ class TestModuleModel:
         assert isinstance(module, Module)
         assert isinstance(module.title, str)
         assert isinstance(module.description, (str, type(None)))
-        assert isinstance(module.teacher_id, (int, type(None))
+        assert isinstance(module.teacher_id, (int, type(None)))
 
     def test_module_init_with_missing_value(self) -> None:
         # Test initialising a Module instance with missing values

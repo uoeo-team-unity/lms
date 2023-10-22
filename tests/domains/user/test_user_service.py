@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import UserService
 from tests.factories import UserFactory
+
 
 @pytest.mark.usefixtures("wipe_users_table")
 class TestUserService:
@@ -48,7 +50,9 @@ class TestUserService:
         }
         message, status = UserService().create(params=params)
 
-        assert message == f"User with email {user.email} already exists, please double check the parameters and try again"
+        assert message == (
+            f"User with email {user.email} already exists, " "please double check the parameters and try again"
+        )
         assert status == 422
 
     def test_create_user_with_invalid_role(self) -> None:
@@ -82,7 +86,9 @@ class TestUserService:
         UserFactory.create(password=hashed_password)
         message, status = UserService().login(username="Invalid Username", password="test")
 
-        assert message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        assert (
+            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        )
         assert status == 422
 
     def test_user_login_with_invalid_password(self) -> None:
@@ -91,5 +97,7 @@ class TestUserService:
         user = UserFactory.create(password=hashed_password)
         message, status = UserService().login(username=user.username, password="invalid")
 
-        assert message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        assert (
+            message == "An error occurred while trying to log-in, please double check your credentials and try again."
+        )
         assert status == 422

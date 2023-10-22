@@ -16,6 +16,7 @@ from tests.factories import StudentFactory, TeacherFactory, UserFactory
 # Define the path to the authentication token file.
 AUTH_TOKEN_PATH = f"{HERE}/../.auth"
 
+
 # Create a fixture for the Flask application.
 @pytest.fixture
 def app(request) -> Generator:
@@ -23,10 +24,12 @@ def app(request) -> Generator:
     with app.app_context():
         yield app
 
+
 # Create a fixture for the Flask test client.
 @pytest.fixture()
 def client(app) -> Flask:
     return app.test_client()
+
 
 # Create a fixture for the database.
 @pytest.fixture
@@ -45,6 +48,7 @@ def db(app, request, monkeypatch) -> Generator:
         transaction.rollback()
         connection.close()
 
+
 # Create a fixture for wiping the users table.
 @pytest.fixture
 def wipe_users_table(db) -> Generator:
@@ -56,12 +60,14 @@ def wipe_users_table(db) -> Generator:
     db.session.execute(text("TRUNCATE users CASCADE;"))
     db.session.commit()
 
+
 # Create a fixture for wiping the modules table.
 @pytest.fixture
 def wipe_modules_table(db) -> Generator:
     yield
     db.session.execute(text("TRUNCATE modules CASCADE;"))
     db.session.commit()
+
 
 # Create a fixture for wiping the assignments table.
 @pytest.fixture
@@ -70,6 +76,7 @@ def wipe_assignments_table(db) -> Generator:
     db.session.execute(text("TRUNCATE assignments CASCADE;"))
     db.session.commit()
 
+
 # Create a fixture for wiping the grades table.
 @pytest.fixture
 def wipe_grades_table(db) -> Generator:
@@ -77,12 +84,14 @@ def wipe_grades_table(db) -> Generator:
     db.session.execute(text("TRUNCATE grades CASCADE;"))
     db.session.commit()
 
+
 # Create a fixture for wiping the feature_switches table.
 @pytest.fixture
 def wipe_feature_switch_table(db) -> Generator:
     yield
     db.session.execute(text("TRUNCATE feature_switches;"))
     db.session.commit()
+
 
 # Create a fixture for the admin user.
 @pytest.fixture
@@ -92,6 +101,7 @@ def admin_user(db) -> Generator:
     update_token(admin_user.auth_token)
     yield admin_user
 
+
 # Create a fixture for the teacher user.
 @pytest.fixture
 def teacher_user(db) -> Generator:
@@ -99,6 +109,7 @@ def teacher_user(db) -> Generator:
     teacher_user = TeacherFactory.create()
     update_token(teacher_user.auth_token)
     yield teacher_user
+
 
 # Create a fixture for the student user.
 @pytest.fixture
@@ -108,12 +119,14 @@ def student_user(db) -> Generator:
     update_token(student_user.auth_token)
     yield student_user
 
+
 # Create a fixture for the teacher user without a token.
 @pytest.fixture
 def teacher_user_without_token(wipe_users_table) -> Generator:
     # Create a teacher user without an authentication token.
     teacher_user = TeacherFactory.create(username="teacher")
     yield teacher_user
+
 
 # Create a fixture for toggling the "hacker_mode" feature.
 @pytest.fixture
@@ -136,6 +149,7 @@ def toggle_hacker_mode(db) -> Generator:
     # Clean up the feature_switches table after the test.
     db.session.execute(text("TRUNCATE feature_switches;"))
     db.session.commit()
+
 
 # Update the authentication token.
 def update_token(token) -> None:

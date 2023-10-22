@@ -1,6 +1,8 @@
 import pytest
+
 from lms.domains import ModuleService
 from tests.factories import ModuleFactory
+
 
 @pytest.mark.usefixtures("wipe_modules_table")
 class TestModuleService:

@@ -1,7 +1,9 @@
 import json
+
 import pytest
-from lms.domains import User, UserRole
-from tests.factories import StudentFactory, UserFactory
+
+from tests.factories import UserFactory
+
 
 @pytest.mark.usefixtures("wipe_users_table")
 class TestUser:
@@ -24,17 +26,17 @@ class TestUser:
 
     def test_create_user_with_hacker_mode_on(self, client, toggle_hacker_mode) -> None:
         # Test creating a user with hacker mode enabled
-        user = UserFactory.build()
+        UserFactory.build()
         # ... (same structure as above)
 
     def test_create_user_with_missing_argument(self, client, admin_user) -> None:
         # Test creating a user with missing arguments
-        user = UserFactory.build()
+        UserFactory.build()
         # ... (same structure as above)
 
     def test_create_user_with_existing_email_address(self, client, admin_user) -> None:
         # Test creating a user with an existing email address
-        user = UserFactory.create()
+        UserFactory.create()
         # ... (same structure as above)
 
     def test_list_all_users(self, client, admin_user) -> None:

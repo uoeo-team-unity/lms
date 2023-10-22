@@ -4,9 +4,9 @@ import os
 # Import the AUTH_TOKEN_PATH from the test configuration.
 from tests.conftest import AUTH_TOKEN_PATH
 
+
 # Define a test class for the Flask application.
 class TestApp:
-
     # Test the root endpoint of the application.
     def test_root(self, client) -> None:
         response = client.get("/")
@@ -89,12 +89,13 @@ class TestApp:
     def test_logout(self, client, admin_user) -> None:
         # Check if the AUTH_TOKEN_PATH file exists (indicating a user is logged in).
         assert os.path.exists(AUTH_TOKEN_PATH)
-        
+
         # Log out the user and verify the response and file existence.
         response = client.put("/logout")
         data = json.loads(response.data)
 
-        # Assert that the response status code is 200, the logout was successful, and the AUTH_TOKEN_PATH file no longer exists.
+        # Assert that the response status code is 200, the logout was successful,
+        # and the AUTH_TOKEN_PATH file no longer exists.
         assert response.status_code == 200
         assert data == {"message": "Successfully logged-out of the app"}
         assert not os.path.exists(AUTH_TOKEN_PATH)
