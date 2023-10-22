@@ -5,7 +5,7 @@ from tests.factories import UserFactory
 @pytest.mark.usefixtures("wipe_users_table")
 class TestUserModel:
     def test_user_init(self) -> None:
-        # Test initializing a User model
+        # Test initialising a User model
         user = UserFactory.build()
         assert isinstance(user, User)
         assert isinstance(user.first_name, str)
@@ -14,7 +14,7 @@ class TestUserModel:
         assert isinstance(user.role_id, int)
 
     def test_user_init_with_missing_value(self) -> None:
-        # Test initializing a User model with missing values
+        # Test initialising a User model with missing values
         with pytest.raises(TypeError) as error:
             User()
 

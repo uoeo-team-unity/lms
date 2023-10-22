@@ -1,13 +1,11 @@
 import json
-
 import pytest
-
 from tests.factories import AssignmentFactory, GradeFactory, StudentFactory
-
 
 @pytest.mark.usefixtures("wipe_grades_table")
 class TestGrade:
     def test_create_grade(self, client, teacher_user) -> None:
+        # Test creating a grade
         grade = GradeFactory.build()
         student = StudentFactory.create()
         assignment = AssignmentFactory.create()
@@ -23,6 +21,7 @@ class TestGrade:
         )
 
     def test_create_grade_with_hacker_mode(self, client, teacher_user_without_token, toggle_hacker_mode) -> None:
+        # Test creating a grade with hacker mode enabled
         grade = GradeFactory.build()
         student = StudentFactory.create()
         assignment = AssignmentFactory.create()
@@ -38,6 +37,7 @@ class TestGrade:
         )
 
     def test_create_grade_with_missing_argument(self, client, teacher_user) -> None:
+        # Test creating a grade with missing arguments
         grade = GradeFactory.build()
 
         params = {"assignment_id": grade.assignment_id, "score": grade.score}
@@ -49,6 +49,7 @@ class TestGrade:
         assert data.get("message") == "Something doesn't look right, please double check the parameters and try again"
 
     def test_create_grade_as_a_student(self, client, student_user) -> None:
+        # Test creating a grade as a student
         grade = GradeFactory.build()
         student = StudentFactory.create()
         assignment = AssignmentFactory.create()
@@ -65,6 +66,7 @@ class TestGrade:
         )
 
     def test_view_grades_as_student(self, client, student_user) -> None:
+        # Test viewing grades as a student
         assignment = AssignmentFactory.create()
         another_assignment = AssignmentFactory.create()
         grade_one = GradeFactory.create(student_id=student_user.id, assignment_id=assignment.id, score=30)
@@ -78,6 +80,7 @@ class TestGrade:
         assert response.status_code == 200
 
     def test_view_grades_as_non_student(self, client, teacher_user) -> None:
+        # Test viewing grades as a non-student user
         response = client.get("/grades/view")
         data = json.loads(response.data)
 

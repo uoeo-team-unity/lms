@@ -1,12 +1,11 @@
 import pytest
-
 from lms.domains import GradeService
 from tests.factories import AssignmentFactory, GradeFactory, StudentFactory
-
 
 @pytest.mark.usefixtures("wipe_grades_table")
 class TestGradeService:
     def test_create_grade(self) -> None:
+        # Test creating a grade using GradeService
         grade = GradeFactory.build()
         student = StudentFactory.create()
         assignment = AssignmentFactory.create()
@@ -19,6 +18,7 @@ class TestGradeService:
         assert status == 201
 
     def test_create_grade_with_missing_params(self) -> None:
+        # Test creating a grade with missing parameters using GradeService
         grade = GradeFactory.build()
 
         params = {"assignment_id": grade.assignment_id, "score": grade.score}
