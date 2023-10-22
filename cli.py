@@ -18,13 +18,14 @@ def cli(ctx) -> None:
         click.echo("1. Login to the app")
         click.echo("2. Register a new user")
         click.echo("3. List all current users")
-        click.echo("4. Create a Module")
-        click.echo("5. Create an Assignment")
-        click.echo("6. Submit a Grade")
-        click.echo("7. View Grades as a Student")
-        click.echo("8. Toggle Hacker Mode")
-        click.echo("9. Logout")
-        click.echo("10. Exit")
+        click.echo("4. Update a user")
+        click.echo("5. Create a Module")
+        click.echo("6. Create an Assignment")
+        click.echo("7. Submit a Grade")
+        click.echo("8. View Grades as a Student")
+        click.echo("9. Toggle Hacker Mode")
+        click.echo("10. Logout")
+        click.echo("11. Exit")
 
         choice = click.prompt("Please select an action", type=int)
 
@@ -35,18 +36,20 @@ def cli(ctx) -> None:
         elif choice == 3:
             list_all_users()
         elif choice == 4:
-            create_module()
+            update_user()
         elif choice == 5:
-            create_assignment()
+            create_module()
         elif choice == 6:
-            submit_grade()
+            create_assignment()
         elif choice == 7:
-            view_grades()
+            submit_grade()
         elif choice == 8:
-            toggle_hacker_mode()
+            view_grades()
         elif choice == 9:
-            logout()
+            toggle_hacker_mode()
         elif choice == 10:
+            logout()
+        elif choice == 11:
             click.echo("Exiting...")
             break
         else:
@@ -116,6 +119,52 @@ def list_all_users() -> None:
             )
             start_number += 1
 
+    click.echo("")
+
+
+def update_user() -> None:
+    """Update an existing user."""
+
+    response = requests.get(f"{API_BASE_URL}/users/list")
+    data = response.json()
+
+    if isinstance(data, dict):
+        message = data.get("message")
+        click.echo(message)
+    else:
+        click.echo("")
+        click.echo("Current users in the system:")
+        for user in data:
+            click.echo(
+                f'- User ID {user.get("id")}. first name: {user.get("first_name")}, '
+                f'last name: {user.get("last_name")}, username: {user.get("username")}'
+            )
+    click.echo("")
+
+    user_id = click.prompt("Please enter the user ID of the user you want to update", type=int)
+    username = click.prompt("Please enter a new username (or press Enter to skip)", type=str, default="")
+    role = click.prompt(
+        "Please enter a new role (Admin, Teacher, Student, or press Enter to skip)", type=str, default=""
+    )
+    first_name = click.prompt("Please enter a new first name (or press Enter to skip)", type=str, default="")
+    last_name = click.prompt("Please enter a new last name (or press Enter to skip)", type=str, default="")
+    email = click.prompt("Please enter a new email (or press Enter to skip)", type=str, default="")
+
+    user_data = {
+        "user_id": user_id,
+        "username": username,
+        "role": role,
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+    }
+
+    user_data = {k: v for k, v in user_data.items() if v}
+
+    response = requests.put(f"{API_BASE_URL}/users/{user_id}", json=user_data)
+    data = response.json()
+    message = data.get("message")
+    click.echo(message)
     click.echo("")
 
 
