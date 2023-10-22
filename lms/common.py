@@ -3,6 +3,7 @@ import os
 from functools import wraps
 from typing import Any, Final
 
+from lms.domains.feature_switch import FeatureSwitch
 from lms.domains.user.user_model import User
 
 HERE: Final[str] = os.path.dirname(os.path.realpath(__file__))
@@ -11,6 +12,12 @@ HERE: Final[str] = os.path.dirname(os.path.realpath(__file__))
 def authorise_admin(function) -> Any:
     @wraps(function)
     def check_user_auth(*args, **kwargs) -> Any:
+        # Fetch the hacker_mode feature switch status from the database
+        hacker_mode = FeatureSwitch.find_by(name="hacker_mode")
+        # If the hacker mode is active, bypass the authorisation and impersonate the current user
+        if hacker_mode and hacker_mode.active:
+            return function(*args, **kwargs)
+
         access_token = None
 
         try:
@@ -41,6 +48,12 @@ def authorise_admin(function) -> Any:
 def authorise_admin_or_teacher(function) -> Any:
     @wraps(function)
     def check_admin_or_teacher_auth(*args, **kwargs) -> Any:
+        # Fetch the hacker_mode feature switch status from the database
+        hacker_mode = FeatureSwitch.find_by(name="hacker_mode")
+        # If the hacker mode is active, bypass the authorisation and impersonate the current user
+        if hacker_mode and hacker_mode.active:
+            return function(*args, **kwargs)
+
         access_token = None
 
         try:
