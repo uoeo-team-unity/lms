@@ -2,23 +2,23 @@
 
 ## Welcome
 
-This project is the repository for the LMS application.
+Welcome to the Team Unity LMS application repository. This project is the repository for the LMS application.
 
 ## Running with docker
 
-Make sure you have docker running locally, otherwise download the desktop application from the docker [website](https://www.docker.com/products/docker-desktop/).
+Make sure you have Docker running locally. If not, you can download the desktop application from the [Docker website](https://www.docker.com/products/docker-desktop/).
 
-Create the config file:
+Create a configuration file by copying the example file:
 ```bash
 cp .env.example .env
 ```
 
-Spin up compose:
+Spin up the application using Docker Compose:
 ```bash
 docker compose up
 ```
 
-Create a launch.json file inside .vscode if you want hot-reload and debugging:
+If you want to enable hot-reload and debugging, create a launch.json file inside the .vscode folder with the following content:
 ```json
 {
     "version": "0.2.0",
@@ -40,29 +40,28 @@ Create a launch.json file inside .vscode if you want hot-reload and debugging:
 }
 ```
 
-Run the tests:
+Run tests with this command:
 
 ```bash
 docker exec -it lms python3 -m pytest -v
 ```
 
-You can also run the tests coverage if you want:
+To run tests with coverage, use this command:
 ```bash
 docker exec -it lms python3 -m pytest --cov=lms tests/
 ```
 
-Launch the CLI App:
-By default, we create a admin user for ease of use, (username: admin, password: admin)
+Launch the CLI App. By default, an admin user is created for ease of use (username: admin, password: admin):
 ```bash
 docker exec -it lms python3 cli.py
 ```
 
 You're good to go 🎉
 <br>
-You can now select Flask via Docker in the Run And Debug tab and start debugging away 🤗
+You're all set! You can now select "Flask via Docker" in your editor's Run and Debug tab and start debugging. 🤗
 
 
-Stop docker-compose:
+To stop Docker Compose, use this command:
 
 ```bash
 docker-compose down -v --remove-orphans
@@ -71,13 +70,12 @@ docker-compose down -v --remove-orphans
 ## Running without docker-compose
 ### Prerequisites
 
-Make sure you have python 3.11 installed and running on your computer, otherwise download the latest version either
-via pyenv or via the python [website](https://www.python.org/downloads/release/python-3116/)
+Make sure you have Python 3.11 installed on your computer. You can download the latest version either via [pyenv](https://github.com/pyenv/pyenv) or from the [Python website](https://www.python.org/downloads/).
 
 ### Install Python via pyenv
-Click [here](https://github.com/pyenv/pyenv#basic-github-checkout) and follow step 2, 3 and 4
+Follow [these instructions](https://github.com/pyenv/pyenv#installation) to install pyenv, and follow steps 2, 3 and 4
 
-Install python (we currently run 3.11.6) and make it your default version:
+Install Python (we currently use version 3.11.6) and make it your default version:
 
 ```bash
 pyenv install 3.11.6
@@ -91,20 +89,20 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-Install the python requirements:
+Install the Python requirements:
 
 ```bash
 python3 -m pip install -r requirements.txt -r tests/requirements.txt
 ```
 
-### Run the app
+### Run the Application
 
 You should now be able to run the app locally:
 
 <details>
 <summary>Visual Studio Code configuration</summary>
 
-Create a new `launch.json` inside `.vscode`:
+Create a new `launch.json` file inside the `.vscode` folder with the following content:
 
 ```json
 {
@@ -130,20 +128,23 @@ Create a new `launch.json` inside `.vscode`:
 }
 ```
 
-You'll then be able to start the application via the debugger
+You will then be able to start the application via the debugger.
 
-The app should be running on http://127.0.0.1:5002
+Start the application via the debugger in Visual Studio Code.
+
+The application should be running at [http://127.0.0.1:5002](http://127.0.0.1:5002).
 
 </details>
 
 <details>
 <summary>Other editors</summary>
 
+If you are using other code editors, you can run the application using the following command:
 ```bash
 flask --app lms.app run
 ```
 
-The app should be running on http://127.0.0.1:5000
+The application should be running at [http://127.0.0.1:5000](http://127.0.0.1:5000).
 </details>
 
 <br>
